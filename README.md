@@ -2,32 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>EchoSight - Project README</title>
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            line-height: 1.6;
-            color: #222;
-            max-width: 900px;
-            margin: 40px auto;
-        }
-        h1, h2 {
-            color: #111;
-        }
-        ul {
-            margin-left: 20px;
-        }
-        code {
-            background: #f4f4f4;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            overflow-x: auto;
-        }
-    </style>
+    
 </head>
 <body>
 
