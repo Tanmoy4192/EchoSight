@@ -81,6 +81,11 @@ EchoSight/
         <pre><code>python main.py</code></pre>
     </li>
 </ol>
+<h2>Demo</h2>
+<p>
+A short demonstration video showing real-time object detection, OCR, and audio feedback is available here:
+<a href="LINK_HERE">Demo Video</a>
+</p>
 
 <h2>Limitations</h2>
 <ul>
