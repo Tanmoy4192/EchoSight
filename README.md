@@ -133,7 +133,7 @@ A short demonstration video showing real-time object detection, rule-based navig
 and live OCR on printed text (triggered using the SPACE key) is available here:
 </p>
 <p>
-<a href="PASTE_DEMO_VIDEO_LINK_HERE" target="_blank">Demo Video</a>
+<a href="https://drive.google.com/file/d/13KHyXgGuLDqJiVFZ60mSzFhYdSkc4pbX/view?usp=sharing" target="_blank">Demo Video</a>
 </p>
 
 <h2>Limitations</h2>
