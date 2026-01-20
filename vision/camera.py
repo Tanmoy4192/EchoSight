@@ -1,15 +1,23 @@
 import cv2
-#take input from camera and gives out put the resized frames
+
 class Camera:
-    def __init__(self, index=0, width=640, height=480):
-        self.cap = cv2.VideoCapture(index) #capturing the video from web cam, using 1 to use secondary cam
+    def __init__(self, index=2, width=1280, height=720):
+        self.cap = cv2.VideoCapture(index, cv2.CAP_DSHOW)
+
         if not self.cap.isOpened():
-            raise RuntimeError("Could not open camera.") 
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width) #resized width
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height) #resized height
+            raise RuntimeError("Could not open camera.")
+
+        # Request resolution
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+
+        # VERIFY what we actually got
+        actual_w = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        actual_h = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        print(f"[Camera] Requested {width}x{height}, got {actual_w}x{actual_h}")
 
     def get_frame(self):
-        ret, frame = self.cap.read() 
+        ret, frame = self.cap.read()
         if not ret:
             raise RuntimeError("Failed to read frame from camera.")
         return frame

@@ -1,42 +1,26 @@
-import time
 import pyttsx3
 
 
 class Speaker:
-    def __init__(self, cooldown=2):
-        self.engine = pyttsx3.init()
-        self.cooldown = cooldown
-        self.last_spoken = 0
+    def __init__(self):
+        pass  # do NOT keep engine alive
 
-        self.voices = self.engine.getProperty("voices")
-
-        # Try to map voices
-        self.voice_map = {
-            "en": None,
-            "hi": None,
-            "bn": None
-        }
-
-        for v in self.voices:
-            name = v.name.lower()
-            if "english" in name and self.voice_map["en"] is None:
-                self.voice_map["en"] = v.id
-            elif "hindi" in name and self.voice_map["hi"] is None:
-                self.voice_map["hi"] = v.id
-            elif "bengali" in name or "bangla" in name:
-                self.voice_map["bn"] = v.id
-
-    def say(self, text, language="en"):
-        current_time = time.time()
-        if current_time - self.last_spoken < self.cooldown:
+    def say(self, text):
+        if not text:
             return
 
-        voice_id = self.voice_map.get(language)
+        try:
+            engine = pyttsx3.init()
+            engine.setProperty("rate", 170)
 
-        if voice_id:
-            self.engine.setProperty("voice", voice_id)
+            for voice in engine.getProperty("voices"):
+                if "english" in voice.name.lower():
+                    engine.setProperty("voice", voice.id)
+                    break
 
-        self.engine.say(text)
-        self.engine.runAndWait()
+            engine.say(text)
+            engine.runAndWait()
+            engine.stop()
 
-        self.last_spoken = current_time
+        except Exception as e:
+            print("Speaker error:", e)

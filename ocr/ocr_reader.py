@@ -1,42 +1,26 @@
-from paddleocr import PaddleOCR
 import cv2
-
+import pytesseract
 
 class OCRReader:
     def __init__(self):
-        # Speed-optimized OCR model
-        self.ocr = PaddleOCR(
-            use_angle_cls=True,
-            lang='en'
-        )
+        pass
 
     def read(self, image):
-        result = self.ocr.ocr(image)
+        # Convert to grayscale
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        outputs = []
-        if not result:
-            return outputs
+        # Increase contrast
+        gray = cv2.normalize(gray, None, 0, 255, cv2.NORM_MINMAX)
 
-        for line in result[0]:
-            text = None
-            conf = None
+        # Slight blur to remove noise
+        gray = cv2.GaussianBlur(gray, (3, 3), 0)
 
-            if isinstance(line[1], (list, tuple)) and len(line[1]) >= 2:
-                text = line[1][0]
-                conf = line[1][1]
-            elif isinstance(line[1], str):
-                text = line[1]
-                conf = 1.0
-            else:
-                continue
+        # Tesseract config:
+        # --psm 6 = assume a block of text
+        config = "--oem 3 --psm 6"
 
-            if conf < 0.6:
-                continue
+        text = pytesseract.image_to_string(gray, config=config)
 
-            outputs.append({
-                "text": text,
-                "confidence": round(conf, 2),
-                "language": "en"
-            })
-
-        return outputs
+        # Clean output
+        lines = [line.strip() for line in text.split("\n") if line.strip()]
+        return lines
